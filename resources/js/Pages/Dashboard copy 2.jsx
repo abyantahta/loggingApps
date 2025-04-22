@@ -20,17 +20,16 @@ export default function Dashboard() {
                 aspectRatio: 1.0,
                 facingMode: "environment"
             },
-            false
+            true
         );
     
         scanner.render(
             (decodedText) => {
                 setData(decodedText);
                 setError(null);
-                scanner.clear();
             },
             (error) => {
-                // console.warn(error);
+                console.error(error);
                 setError('Failed to access camera. Please ensure you have granted camera permissions.');
             }
         );
@@ -63,11 +62,11 @@ export default function Dashboard() {
                                 <div className="w-full max-w-md mx-auto">
                                     <div id="reader" className="w-full"></div>
                                 </div>
-                                {/* {error && (
+                                {error && (
                                     <div className="mt-4 p-4 bg-red-100 text-red-700 rounded">
                                         <p>{error}</p>
                                     </div>
-                                )} */}
+                                )}
                                 <div className="mt-4 p-4 bg-gray-100 rounded">
                                     <p className="font-medium">Scanned Result:</p>
                                     <p>{data}</p>
