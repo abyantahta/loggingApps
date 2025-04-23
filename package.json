@@ -24,6 +24,7 @@
     "dependencies": {
         "@babel/runtime": "^7.27.0",
         "html5-qrcode": "^2.3.8",
+        "react-icons": "^5.5.0",
         "webrtc-adapter": "^9.0.3"
     }
 }

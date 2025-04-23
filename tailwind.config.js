@@ -25,6 +25,16 @@ export default {
                 blackTheme: "#191315",
                 BlueTheme: "#E1FEFE",
             },
+            screens: {
+                "xs": "30rem",
+                "2xl": "100rem",
+                "3xl": "120rem",
+            },
+            // breakpoints: {
+            //     xs: "30rem",
+            //     "2xl": "100rem",
+            //     "3xl": "120rem",
+            // },
         },
     },
 
