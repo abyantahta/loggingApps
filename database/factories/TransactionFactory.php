@@ -23,6 +23,7 @@ class TransactionFactory extends Factory
             'supplier_startBongkarMuat' => fake()->dateTime(),
             'supplier_selesaiBongkarMuat' => fake()->dateTime(),
             'supplier_out' => fake()->dateTime(),
+            'rit'=> rand(0,2)
             //
         ];
     }

@@ -11,7 +11,7 @@ class UpdateTransactionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class UpdateTransactionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'supplier_code' => 'required|string|max:255',
+            'supplier_in' => 'nullable|date',
+            'supplier_startBongkarMuat' => 'nullable|date',
+            'supplier_selesaiBongkarMuat' => 'nullable|date',
+            'supplier_out' => 'nullable|date',
         ];
     }
 }

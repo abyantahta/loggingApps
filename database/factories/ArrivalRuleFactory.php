@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Supplier>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ArrivalRule>
  */
-class SupplierFactory extends Factory
+class ArrivalRuleFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,8 +18,9 @@ class SupplierFactory extends Factory
     {
         return [
             'supplier_code' => fake()->unique()->randomNumber(6, true),
-            'supplier_name' => fake()->name(),
-            'isRit' => rand(true,false)
+            'jam_kedatangan' => fake()->time(),
+            'rit' => rand(0,2),
+            'durasi_bongkar' =>70
             //
         ];
     }

@@ -16,4 +16,9 @@ class Supplier extends Model
     {
         return $this->hasMany(Transaction::class, 'supplier_code', 'supplier_code');
     }
+    public function arrivalRules()
+    {
+        return $this->hasMany(ArrivalRule::class, 'supplier_code', 'supplier_code');
+    }
+
 }

@@ -19,9 +19,12 @@ return new class extends Migration
             $table->timestamp('supplier_startBongkarMuat')->nullable();
             $table->timestamp('supplier_selesaiBongkarMuat')->nullable();
             $table->timestamp('supplier_out')->nullable();
+            $table->integer('rit')->default(0);
             $table->timestamps();
         });
     }
+
+    // $transaction
 
     /**
      * Reverse the migrations.
