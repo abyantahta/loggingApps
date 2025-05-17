@@ -19,6 +19,8 @@ const Dashboard = ({
     kedatangan_rit2,
     bongkarMuat_rit1,
     bongkarMuat_rit2,
+    months,
+    years,
 }) => {
     queryParams = queryParams || {};
     console.log("bongkarMuat_rit2", bongkarMuat_rit2);
@@ -241,110 +243,155 @@ const Dashboard = ({
         <AuthenticatedLayout>
             <Head title="Dashboard" />
             <div className="py-12">
-                <div className="mx-auto max-w-[100rem] sm:px-6 lg:px-8">
+                <div className="mx-auto max-w-[100rem]  sm:px-6 lg:px-8">
                     <div className="overflow-x-hidden  min-h-screen shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">
-                            <div className="mb-4">
-                                <div className=" text-gray-900 ">
-                                    <div className="mb-6 flex md:flex-col flex-row z-40 gap-y-2 lg:flex-row justify-between">
-                                        <div className="flex z-40 flex-col lg:flex-row gap-x-4 gap-y-2 font-oxanium">
-                                            <SelectInput
-                                                className="w-full border-gray-700 border-[3px] italic font-semibold focus:none ring:none text-greenTheme lg:w-52"
-                                                defaultValue={
-                                                    queryParams?.supplier_code
-                                                }
-                                                onChange={(e) =>
-                                                    searchFieldChanged(
-                                                        "supplier_code",
-                                                        e.target.value
-                                                    )
-                                                }
-                                            >
-                                                <option value="">
-                                                    Suppliers
+                        {/* <div className="p-6 text-gray-900"> */}
+                        <div className="mb-4 p-6 text-gray-900 ">
+                            <div className=" text-gray-900 ">
+                                <div className="mb-6 flex md:flex-col  flex-row z-40 gap-y-2 lg:flex-row justify-between">
+                                    <div className="flex  w-full z-40 flex-col lg:flex-row gap-x-4 gap-y-2 font-oxanium">
+                                        <SelectInput
+                                            className="w-full border-gray-700 border-[3px] italic font-semibold focus:none ring:none text-greenTheme lg:w-64"
+                                            defaultValue={
+                                                queryParams?.supplier_code
+                                            }
+                                            onChange={(e) =>
+                                                searchFieldChanged(
+                                                    "supplier_code",
+                                                    e.target.value
+                                                )
+                                            }
+                                        >
+                                            <option value="">Suppliers</option>
+                                            {suppliers.map((supplier) => (
+                                                <option
+                                                    key={supplier.supplier_code}
+                                                    value={
+                                                        supplier.supplier_code
+                                                    }
+                                                >
+                                                    {supplier.supplier_name}
                                                 </option>
-                                                {suppliers.map((supplier) => (
-                                                    <option
-                                                        key={
-                                                            supplier.supplier_code
-                                                        }
-                                                        value={
-                                                            supplier.supplier_code
-                                                        }
-                                                    >
-                                                        {supplier.supplier_name}
-                                                    </option>
-                                                ))}
-                                            </SelectInput>
-                                            <DatePicker
-                                                searchFieldChanged={
-                                                    searchFieldChanged
-                                                }
-                                                queryParams={queryParams}
-                                            />
-                                        </div>
-                                        {/* </div> */}
+                                            ))}
+                                        </SelectInput>
+                                        <SelectInput
+                                            className="w-full border-gray-700 border-[3px] italic font-semibold focus:none ring:none text-greenTheme lg:w-64"
+                                            defaultValue={
+                                                queryParams?.year
+                                            }
+                                            onChange={(e) =>
+                                                searchFieldChanged(
+                                                    "year",
+                                                    e.target.value
+                                                )
+                                            }
+                                        >
+                                            <option value="">Tahun</option>
+                                            {years.map((year,index) => (
+                                                <option
+                                                    key={year}
+                                                    value={
+                                                        year
+                                                    }
+                                                >
+                                                    {year}
+                                                </option>
+                                            ))}
+                                        </SelectInput>
+                                        <SelectInput
+                                            className="w-full border-gray-700 border-[3px] italic font-semibold focus:none ring:none text-greenTheme lg:w-64"
+                                            defaultValue={
+                                                queryParams?.month
+                                            }
+                                            onChange={(e) =>
+                                                searchFieldChanged(
+                                                    "month",
+                                                    e.target.value
+                                                )
+                                            }
+                                        >
+                                            <option value="">Bulan</option>
+                                            {months.map((month,index) => (
+                                                <option
+                                                    key={month}
+                                                    value={
+                                                        index+1
+                                                    }
+                                                >
+                                                    {month}
+                                                </option>
+                                            ))}
+                                        </SelectInput>
+                                        {/* <DatePicker
+                                            searchFieldChanged={
+                                                searchFieldChanged
+                                            }
+                                            queryParams={queryParams}
+                                        /> */}
                                     </div>
+                                    {/* </div> */}
                                 </div>
-                                <div className="  flex md:flex-row flex-col">
-                                    <div className="w-1/2 ">
-                                        <h1 className=" w-full text-3xl font-bold text-center font-oxanium mb-5 mt-8">
-                                            KEDATANGAN SUPPLIER {kedatangan_rit2? "(Rit 1)": ""}
-                                        </h1>
-                                        <ChartKedatanganRit1 />
-                                    </div>
-                                    {kedatangan_rit2 ? (
-                                        <>
-                                            <div className="w-1/2 ">
-                                                <h1 className=" w-full text-3xl font-bold text-center font-oxanium mb-5 mt-8">
-                                                    KEDATANGAN SUPPLIER (Rit 2)
-                                                </h1>
-                                                {/* <ChartKedatanganRit1 />
-                                                 */}
-                                                <ChartKedatanganRit2 />
-                                            </div>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <div className="w-1/2 ">
-                                                <h1 className=" w-full text-3xl font-bold text-center font-oxanium mb-5 mt-8">
-                                                    DURASI BONGKAR
-                                                </h1>
-                                                <ChartBongkarMuatRit1 />
-                                            </div>
-                                            {/* <div className="w-1/2 ">
+                            </div>
+                            <div className="  flex md:flex-row flex-col">
+                                <div className="md:w-1/2 w-full">
+                                    <h1 className=" w-full text-3xl font-bold text-center font-oxanium mb-5 mt-8">
+                                        KEDATANGAN SUPPLIER{" "}
+                                        {kedatangan_rit2 ? "(Rit 1)" : ""}
+                                    </h1>
+                                    <ChartKedatanganRit1 />
+                                </div>
+                                {kedatangan_rit2 ? (
+                                    <>
+                                        <div className="md:w-1/2 w-full">
+                                            <h1 className=" w-full text-3xl font-bold text-center font-oxanium mb-5 mt-8">
+                                                KEDATANGAN SUPPLIER (Rit 2)
+                                            </h1>
+                                            {/* <ChartKedatanganRit1 />
+                                             */}
+                                            <ChartKedatanganRit2 />
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <div className="md:w-1/2 w-full">
+                                            <h1 className=" w-full text-3xl font-bold text-center font-oxanium mb-5 mt-8">
+                                                DURASI BONGKAR
+                                            </h1>
+                                            <ChartBongkarMuatRit1 />
+                                        </div>
+                                        {/* <div className="w-1/2 ">
                                                 <h1 className=" w-full text-3xl font-bold text-center font-oxanium mb-5 mt-8">
                                                     KEDATANGAN SUPPLIER (Rit 2)
                                                 </h1>
                                                 <ChartKedatanganRit2 />
                                             </div> */}
-                                        </>
-                                    )}
-                                </div>
-                                {kedatangan_rit2 ? (
-                                    <>
-                                        <div className="  flex md:flex-row flex-col">
-                                            <div className="w-1/2 ">
-                                                <h1 className=" w-full text-3xl font-bold text-center font-oxanium mb-5 mt-8">
-                                                    DURASI BONGKAR (Rit 1)
-                                                </h1>
-                                                <ChartBongkarMuatRit1 />
-                                            </div>
-                                            <div className="w-1/2 ">
-                                                <h1 className=" w-full text-3xl font-bold text-center font-oxanium mb-5 mt-8">
-                                                    DURASI BONGKAR (Rit 2)
-                                                </h1>
-                                                {/* <ChartKedatanganRit1 />
-                                                 */}
-                                                <ChartBongkarMuatRit2 />
-                                            </div>
-                                        </div>
                                     </>
-                                ) : (
-                                    <></>
                                 )}
                             </div>
+                            {kedatangan_rit2 ? (
+                                <>
+                                    <div className="  flex lg:flex-row flex-col">
+                                        <div className="lg:w-1/2 w-full">
+                                            <h1 className=" w-full text-3xl font-bold text-center font-oxanium mb-5 mt-8">
+                                                DURASI BONGKAR (Rit 1)
+                                            </h1>
+                                            <ChartBongkarMuatRit1 />
+                                        </div>
+                                        <div className="lg:w-1/2 w-full">
+                                            <h1 className=" w-full text-3xl font-bold text-center font-oxanium mb-5 mt-8">
+                                                DURASI BONGKAR (Rit 2)
+                                            </h1>
+                                            {/* <ChartKedatanganRit1 />
+                                             */}
+                                            <ChartBongkarMuatRit2 />
+                                        </div>
+                                    </div>
+                                </>
+                            ) : (
+                                <></>
+                            )}
                         </div>
+                        {/* </div> */}
                     </div>
                 </div>
             </div>

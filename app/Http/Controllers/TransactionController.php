@@ -63,6 +63,7 @@ class TransactionController extends Controller
     public function store(StoreTransactionRequest $request)
     {
         $data = $request->validated();
+        
         Transaction::create($data);
         return redirect()->route('scan')->with('success', 'Data berhasil disimpan');
     }
