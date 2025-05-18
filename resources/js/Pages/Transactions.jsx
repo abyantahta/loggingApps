@@ -69,20 +69,6 @@ const Transactions = ({
                                 {/* <div className="bg-lightTheme  shadow-lg sm:rounded-lg"> */}
                                 <div className=" text-gray-900 ">
                                     <div className="mb-6 flex flex-col z-40 gap-y-2 lg:flex-row justify-between">
-                                        {/* <TextInput
-                                    className="w-full lg:w-56 border-gray-700 border-[3px] placeholder:italic text-greenTheme font-normal focus:border-greenTheme focus:ring-greenTheme placeholder:text-greenTheme"
-                                    defaultValue={queryParams.no_asset}
-                                    placeholder="Search by no asset"
-                                    onBlur={(e) =>
-                                        searchFieldChanged(
-                                            "no_asset",
-                                            e.target.value
-                                        )
-                                    }
-                                    onKeyPress={(e) =>
-                                        onKeyPress("no_asset", e)
-                                    }
-                                /> */}
                                         <div className="flex z-40 flex-col lg:flex-row gap-x-4 gap-y-2 font-oxanium">
                                             <SelectInput
                                                 className="w-full border-gray-700 border-[3px] italic font-semibold focus:none ring:none text-greenTheme lg:w-52"
@@ -135,7 +121,7 @@ const Transactions = ({
                                                         queryParams?.sort_direction
                                                     }
                                                     sortChanged={sortChanged}
-                                                    className=" text-blackTheme font-oxanium bg-yellowTheme border-2 border-black w-16 rounded-[0.25rem] h-11 flex items-center !font-semibold justify-center"
+                                                    className=" text-blackTheme font-oxanium bg-green-400 border-2 border-black w-16 rounded-[0.25rem] h-11 flex items-center !font-semibold justify-center"
                                                 >
                                                     No
                                                 </TableHeading>
@@ -148,13 +134,13 @@ const Transactions = ({
                                                         queryParams?.sort_direction
                                                     }
                                                     sortChanged={sortChanged}
-                                                    className=" text-blackTheme font-oxanium bg-yellowTheme border-2 border-black w-36 rounded-[0.25rem] h-11 flex items-center !font-semibold justify-center"
+                                                    className=" text-blackTheme font-oxanium bg-green-400 border-2 border-black w-36 rounded-[0.25rem] h-11 flex items-center !font-semibold justify-center"
                                                 >
                                                     Kode
                                                 </TableHeading>
-                                                {/* <th className='text-blackTheme font-oxanium bg-yellowTheme border-2 border-black w-12 rounded-[0.25rem] h-11 flex items-center !font-semibold justify-center'>No</th> */}
+                                                {/* <th className='text-blackTheme font-oxanium bg-green-400 border-2 border-black w-12 rounded-[0.25rem] h-11 flex items-center !font-semibold justify-center'>No</th> */}
                                                 <th className=" text-white w-40 h-11 flex items-center !font-semibold justify-center">
-                                                    <span className="text-blackTheme font-oxanium bg-yellowTheme border-2 border-black  w-full h-11 flex items-center justify-center rounded-[0.25rem]">
+                                                    <span className="text-blackTheme font-oxanium bg-green-400 border-2 border-black  w-full h-11 flex items-center justify-center rounded-[0.25rem]">
                                                         Nama Supplier
                                                     </span>
                                                 </th>
@@ -167,61 +153,28 @@ const Transactions = ({
                                                         queryParams?.sort_direction
                                                     }
                                                     sortChanged={sortChanged}
-                                                    className=" text-blackTheme font-oxanium bg-yellowTheme border-2 border-black w-44 rounded-[0.25rem] h-11 flex items-center !font-semibold justify-center"
+                                                    className=" text-blackTheme font-oxanium bg-green-400 border-2 border-black w-44 rounded-[0.25rem] h-11 flex items-center !font-semibold justify-center"
                                                 >
                                                     Tanggal Datang
                                                 </TableHeading>
-                                                {/* <TableHeading
-                                            name="machine"
-                                            sort_field={
-                                                queryParams.sort_field
-                                            }
-                                            sort_direction={
-                                                queryParams.sort_direction
-                                            }
-                                            sortChanged={sortChanged}
-                                            className=" text-blackTheme font-oxanium bg-yellowTheme border-2 border-black w-40 rounded-[0.25rem] h-11 flex items-center !font-semibold justify-center"
-                                        >
-                                            Jam Datang
-                                        </TableHeading> */}
                                                 <th
                                                     name="category"
                                                     // sortChanged={sortChanged}
-                                                    className=" text-blackTheme font-oxanium bg-yellowTheme border-2 border-black w-28 rounded-[0.25rem] h-11 flex items-center !font-semibold justify-center"
+                                                    className=" text-blackTheme font-oxanium bg-green-400 border-2 border-black w-28 rounded-[0.25rem] h-11 flex items-center !font-semibold justify-center"
                                                 >
                                                     Jam Datang
                                                 </th>
-                                                {/* <TableHeading
-                                                name="durasi_tunggu"
-                                                sort_field={
-                                                    queryParams?.sort_field
-                                                }
-                                                sort_direction={
-                                                    queryParams?.sort_direction
-                                                }
-                                                sortChanged={sortChanged}
-                                                className=" text-blackTheme font-oxanium bg-yellowTheme border-2 border-black w-48 rounded-[0.25rem] h-11 flex items-center !font-semibold justify-center"
-                                            >
-                                                Durasi Tunggu
-                                            </TableHeading> */}
                                                 <th
                                                     name="durasi_tunggu"
                                                     // sortChanged={sortChanged}
-                                                    className=" text-blackTheme font-oxanium bg-yellowTheme border-2 border-black w-48 rounded-[0.25rem] h-11 flex items-center !font-semibold justify-center"
+                                                    className=" text-blackTheme font-oxanium bg-green-400 border-2 border-black w-48 rounded-[0.25rem] h-11 flex items-center !font-semibold justify-center"
                                                 >
                                                     Durasi Tunggu
                                                 </th>
 
                                                 <th
                                                     name="problem"
-                                                    // sort_field={
-                                                    //     queryParams.sort_field
-                                                    // }
-                                                    // sort_direction={
-                                                    //     queryParams.sort_direction
-                                                    // }
-                                                    // sortChanged={sortChanged}
-                                                    className=" text-blackTheme font-oxanium bg-yellowTheme border-2 border-black w-48 rounded-[0.25rem] h-11 flex items-center !font-semibold justify-center"
+                                                    className=" text-blackTheme font-oxanium bg-green-400 border-2 border-black w-48 rounded-[0.25rem] h-11 flex items-center !font-semibold justify-center"
                                                 >
                                                     Durasi Bongkar Muat
                                                 </th>
@@ -234,20 +187,13 @@ const Transactions = ({
                                                         queryParams.sort_direction
                                                     }
                                                     sortChanged={sortChanged}
-                                                    className=" text-blackTheme font-oxanium bg-yellowTheme border-2 border-black w-44 rounded-[0.25rem] h-11 flex items-center !font-semibold justify-center"
+                                                    className=" text-blackTheme font-oxanium bg-green-400 border-2 border-black w-44 rounded-[0.25rem] h-11 flex items-center !font-semibold justify-center"
                                                 >
                                                     Tanggal Keluar
                                                 </TableHeading>
                                                 <th
                                                     name="reparation"
-                                                    // sort_field={
-                                                    //     queryParams.sort_field
-                                                    // }
-                                                    // sort_direction={
-                                                    //     queryParams.sort_direction
-                                                    // }
-                                                    // sortChanged={sortChanged}
-                                                    className=" text-blackTheme font-oxanium bg-yellowTheme border-2 border-black w-28 rounded-[0.25rem] h-11 flex items-center !font-semibold justify-center"
+                                                    className=" text-blackTheme font-oxanium bg-green-400 border-2 border-black w-28 rounded-[0.25rem] h-11 flex items-center !font-semibold justify-center"
                                                 >
                                                     Jam Keluar
                                                 </th>
@@ -425,7 +371,7 @@ const Transactions = ({
                             </div>
                         <a
                                     href={`transactions/export${queryParamsExport()}`}
-                                    className="w-full md:w-72  py-3 px-4 tracking-wide text-center hover:bg-blackTheme hover:text-yellowTheme hover:duration-150 bg-yellowTheme font-oxanium text-blackTheme font-bold flex items-center justify-center gap-2 rounded-md hover:brightness-110 duration-150"
+                                    className="w-full md:w-72  py-3 px-4 tracking-wide text-center hover:bg-blackTheme hover:text-yellowTheme hover:duration-150 bg-green-400 font-oxanium text-blackTheme font-bold flex items-center justify-center gap-2 rounded-md hover:brightness-110 duration-150"
                                 >
                                     {/* <ArrowLeftStartOnRectangleIcon className="w-6" /> */}
                                     Export Transactions

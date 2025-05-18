@@ -8,6 +8,7 @@ use App\Http\Requests\StoreTransactionRequest;
 use App\Http\Requests\UpdateTransactionRequest;
 use App\Http\Resources\TransactionExportResource;
 use App\Http\Resources\TransactionResource;
+use App\Models\ArrivalRule;
 use App\Models\Supplier;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
@@ -63,8 +64,28 @@ class TransactionController extends Controller
     public function store(StoreTransactionRequest $request)
     {
         $data = $request->validated();
-        
-        Transaction::create($data);
+        // dd($data);
+        $rules = ArrivalRule::query()->where('supplier_code',$data["supplier_code"])->get();
+        // dd($rules);
+        $rit = 1;
+        if(count($rules)==2){
+            //SUBHOURS AGAR ADA TOLERANSI JIKA DATANG KECEPETAN 2 JAM
+            $ruleRit1 = Carbon::parse($rules[0]->jam_kedatangan)->subHours(2)->format('H:i');
+            $ruleRit2 = Carbon::parse($rules[1]->jam_kedatangan)->subHours(2)->format('H:i');
+            //DIBUAT SEPERTI INI AGAR DIA BENTUKNYA OBJECT
+            $timeActual = Carbon::createFromFormat('H:i', Carbon::parse($data["supplier_in"])->format('H:i')); // 6 AM
+
+            if ($timeActual->between($ruleRit1, $ruleRit2, true)) {
+                $rit = 1;
+            } else{
+                $rit = 2;
+            }
+        }
+        Transaction::create([
+            'supplier_in' => $data["supplier_in"],
+            'supplier_code' => $data["supplier_code"],
+            'rit'=>$rit
+        ]);
         return redirect()->route('scan')->with('success', 'Data berhasil disimpan');
     }
 

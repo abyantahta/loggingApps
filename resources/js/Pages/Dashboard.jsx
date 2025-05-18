@@ -6,7 +6,7 @@ import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, router } from "@inertiajs/react";
 import moment from "moment";
-import React from "react";
+import React, { useState } from "react";
 // import React from "react";
 import Chart from "react-apexcharts";
 
@@ -22,9 +22,10 @@ const Dashboard = ({
     months,
     years,
 }) => {
+    let [zoomKedatanganRit1, setZoomKedatanganRit1] = useState(1);
+    let [zoomKedatanganRit2, setZoomKedatanganRit2] = useState(1);
     queryParams = queryParams || {};
     console.log("bongkarMuat_rit2", bongkarMuat_rit2);
-    // console.log('kedatangan_rit2',kedatangan_rit2);
     const searchFieldChanged = (name, value) => {
         if (value) {
             console.log(name, value);
@@ -39,8 +40,8 @@ const Dashboard = ({
     const ChartKedatanganRit1 = () => {
         const options = {
             yaxis: {
-                min: kedatangan_rit1[1] - 60, // 12:00 → 12 * 60
-                max: kedatangan_rit1[1] + 60, // 15:00 → 15 * 60
+                min: kedatangan_rit1[1] - 60 * zoomKedatanganRit1, // 12:00 → 12 * 60
+                max: kedatangan_rit1[1] + 60 * zoomKedatanganRit1, // 15:00 → 15 * 60
                 tickAmount: 6, // Shows every hour clearly
                 labels: {
                     formatter: (value) => {
@@ -97,8 +98,8 @@ const Dashboard = ({
     const ChartKedatanganRit2 = () => {
         const options = {
             yaxis: {
-                min: kedatangan_rit2[1] - 60, // 12:00 → 12 * 60
-                max: kedatangan_rit2[1] + 60, // 15:00 → 15 * 60
+                min: kedatangan_rit2[1] - 60 * zoomKedatanganRit2, // 12:00 → 12 * (60)
+                max: kedatangan_rit2[1] + 60 * zoomKedatanganRit2, // 15:00 → 15 * 60
                 tickAmount: 6, // Shows every hour clearly
                 labels: {
                     formatter: (value) => {
@@ -276,9 +277,7 @@ const Dashboard = ({
                                         </SelectInput>
                                         <SelectInput
                                             className="w-full border-gray-700 border-[3px] italic font-semibold focus:none ring:none text-greenTheme lg:w-64"
-                                            defaultValue={
-                                                queryParams?.year
-                                            }
+                                            defaultValue={queryParams?.year}
                                             onChange={(e) =>
                                                 searchFieldChanged(
                                                     "year",
@@ -287,22 +286,15 @@ const Dashboard = ({
                                             }
                                         >
                                             <option value="">Tahun</option>
-                                            {years.map((year,index) => (
-                                                <option
-                                                    key={year}
-                                                    value={
-                                                        year
-                                                    }
-                                                >
+                                            {years.map((year, index) => (
+                                                <option key={year} value={year}>
                                                     {year}
                                                 </option>
                                             ))}
                                         </SelectInput>
                                         <SelectInput
                                             className="w-full border-gray-700 border-[3px] italic font-semibold focus:none ring:none text-greenTheme lg:w-64"
-                                            defaultValue={
-                                                queryParams?.month
-                                            }
+                                            defaultValue={queryParams?.month}
                                             onChange={(e) =>
                                                 searchFieldChanged(
                                                     "month",
@@ -311,12 +303,10 @@ const Dashboard = ({
                                             }
                                         >
                                             <option value="">Bulan</option>
-                                            {months.map((month,index) => (
+                                            {months.map((month, index) => (
                                                 <option
                                                     key={month}
-                                                    value={
-                                                        index+1
-                                                    }
+                                                    value={index + 1}
                                                 >
                                                     {month}
                                                 </option>
@@ -339,6 +329,32 @@ const Dashboard = ({
                                         {kedatangan_rit2 ? "(Rit 1)" : ""}
                                     </h1>
                                     <ChartKedatanganRit1 />
+                                    <div className="flex gap-7 items-center justify-center">
+                                        <button
+                                            className="bg-yellow-400 hover:bg-yellow-300 hover:duration-100 duration-100 w-12 h-12 text-white flex items-center justify-center pb-1 text-6xl rounded-full"
+                                            onClick={(e) =>{
+                                                if(zoomKedatanganRit1>1){
+                                                    setZoomKedatanganRit1(
+                                                        zoomKedatanganRit1 - 1
+                                                    )
+                                                }
+                                            }}
+                                        >
+                                            -
+                                        </button>
+                                        <button
+                                            className="bg-yellow-400 hover:bg-yellow-300 hover:duration-100 duration-100  w-12 h-12 text-white flex items-center justify-center pb-1 text-6xl rounded-full"
+                                            onClick={(e) =>{
+                                                
+                                                setZoomKedatanganRit1(
+                                                    zoomKedatanganRit1 + 1
+                                                )
+                                            }
+                                        }
+                                        >
+                                            +
+                                        </button>
+                                    </div>
                                 </div>
                                 {kedatangan_rit2 ? (
                                     <>
@@ -349,6 +365,32 @@ const Dashboard = ({
                                             {/* <ChartKedatanganRit1 />
                                              */}
                                             <ChartKedatanganRit2 />
+                                            <div className="flex gap-7 items-center justify-center">
+                                        <button
+                                            className="bg-yellow-400 hover:bg-yellow-300 hover:duration-100 duration-100 w-12 h-12 text-white flex items-center justify-center pb-1 text-6xl rounded-full"
+                                            onClick={(e) =>{
+                                                if(zoomKedatanganRit2>1){
+                                                    setZoomKedatanganRit2(
+                                                        zoomKedatanganRit2 - 1
+                                                    )
+                                                }
+                                            }}
+                                        >
+                                            -
+                                        </button>
+                                        <button
+                                            className="bg-yellow-400 hover:bg-yellow-300 hover:duration-100 duration-100  w-12 h-12 text-white flex items-center justify-center pb-1 text-6xl rounded-full"
+                                            onClick={(e) =>{
+                                                
+                                                setZoomKedatanganRit2(
+                                                    zoomKedatanganRit2 + 1
+                                                )
+                                            }
+                                        }
+                                        >
+                                            +
+                                        </button>
+                                    </div>
                                         </div>
                                     </>
                                 ) : (

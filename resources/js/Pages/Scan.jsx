@@ -148,30 +148,25 @@ export default function Scan({ transactions, queryParams = null, success = null 
                         <div className="p-6 text-gray-900">
                             <div className="mb-4">
                                 {/* <h3 className="text-lg font-medium mb-2">QR Code Scanner</h3> */}
-                                <div className="w-full max-w-md mx-auto">
+                                <div className="w-full max-w-md mx-auto flex items-center flex-col">
                                     <div id="reader" className="w-full"></div>
                                     {!isScan && (
-                                        <button onClick={() => setIsScan(true)}>
+                                        <button className="bg-yellow-400 font-semibold font-oxanium py-2 px-5 rounded-md mx-auto" onClick={() => setIsScan(true)}>
                                             Scan Ulang
                                         </button>
                                     )}
                                 </div>
-                                {/* {error && (
-                                    <div className="mt-4 p-4 bg-red-100 text-red-700 rounded">
-                                        <p>{error}</p>
-                                    </div>
-                                )} */}
-                                <div className="mt-4 p-4 bg-gray-100 rounded">
-                                    <p className="font-medium">
+                                <div className="my-4 p-4 bg-white text-center rounded">
+                                    <p className="font-medium text-2xl">
                                         Scanned Result:
                                     </p>
-                                    <p>{scanData}</p>
+                                    <p className="text-xl font-bold">{scanData}</p>
                                 </div>
                                 <div className=" overflow-auto w-full">
                                     <table className=" mb-4 min-w-full table-fixed z-10 h-full border-collapse border-spacing-2 gap-1">
                                         <thead className=" overflow-auto">
                                             <tr className="min-w-full flex text-center gap-3 !font-semibold">
-                                                <TableHeading
+                                                <th
                                                     name="id"
                                                     sort_field={
                                                         queryParams?.sort_field
@@ -180,111 +175,55 @@ export default function Scan({ transactions, queryParams = null, success = null 
                                                         queryParams?.sort_direction
                                                     }
                                                     sortChanged={sortChanged}
-                                                    className=" bg-orangeTheme text-black border-2 border-black w-16 rounded-[0.25rem] h-11 flex items-center !font-semibold justify-center"
+                                                    className=" bg-green-300 text-black border-2 border-black w-16 rounded-[0.25rem] h-11 flex items-center !font-semibold justify-center"
                                                 >
                                                     No
-                                                </TableHeading>
-                                                <TableHeading
+                                                </th>
+                                                <th
                                                     name="problem_date"
-                                                    sort_field={
-                                                        queryParams?.sort_field
-                                                    }
-                                                    sort_direction={
-                                                        queryParams?.sort_direction
-                                                    }
-                                                    sortChanged={sortChanged}
-                                                    className=" bg-orangeTheme text-black border-2 border-black w-36 rounded-[0.25rem] h-11 flex items-center !font-semibold justify-center"
+                                                    className=" bg-green-300 text-black border-2 border-black w-36 rounded-[0.25rem] h-11 flex items-center !font-semibold justify-center"
                                                 >
                                                     Kode
-                                                </TableHeading>
-                                                {/* <th className='bg-orangeTheme text-black border-2 border-black w-12 rounded-[0.25rem] h-11 flex items-center !font-semibold justify-center'>No</th> */}
+                                                </th>
                                                 <th className=" border-r-[10px] border-r-lightTheme text-white w-40 -mr-3 h-11 flex items-center !font-semibold justify-center">
-                                                    <span className="bg-orangeTheme text-black border-2 border-black  w-full h-11 flex items-center justify-center rounded-[0.25rem]">
+                                                    <span className="bg-green-300 text-black border-2 border-black  w-full h-11 flex items-center justify-center rounded-[0.25rem]">
                                                         Nama Supplier
                                                     </span>
                                                 </th>
-                                                <TableHeading
+                                                <th
                                                     name="name"
-                                                    sort_field={
-                                                        queryParams?.sort_field
-                                                    }
-                                                    sort_direction={
-                                                        queryParams?.sort_direction
-                                                    }
-                                                    sortChanged={sortChanged}
-                                                    className=" bg-orangeTheme text-black border-2 border-black w-44 rounded-[0.25rem] h-11 flex items-center !font-semibold justify-center"
+                                                    className=" bg-green-300 text-black border-2 border-black w-44 rounded-[0.25rem] h-11 flex items-center !font-semibold justify-center"
                                                 >
                                                     Tanggal Datang
-                                                </TableHeading>
-                                                {/* <TableHeading
-                                                name="machine"
-                                                sort_field={
-                                                    queryParams.sort_field
-                                                }
-                                                sort_direction={
-                                                    queryParams.sort_direction
-                                                }
-                                                sortChanged={sortChanged}
-                                                className=" bg-orangeTheme text-black border-2 border-black w-40 rounded-[0.25rem] h-11 flex items-center !font-semibold justify-center"
-                                            >
-                                                Jam Datang
-                                            </TableHeading> */}
+                                                </th>
                                                 <th
                                                     name="category"
                                                     // sortChanged={sortChanged}
-                                                    className=" bg-orangeTheme text-black border-2 border-black w-28 rounded-[0.25rem] h-11 flex items-center !font-semibold justify-center"
+                                                    className=" bg-green-300 text-black border-2 border-black w-28 rounded-[0.25rem] h-11 flex items-center !font-semibold justify-center"
                                                 >
                                                     Jam Datang
                                                 </th>
-                                                <TableHeading
+                                                <th
                                                     name="stopline_duration"
-                                                    sort_field={
-                                                        queryParams?.sort_field
-                                                    }
-                                                    sort_direction={
-                                                        queryParams?.sort_direction
-                                                    }
-                                                    sortChanged={sortChanged}
-                                                    className=" bg-orangeTheme text-black border-2 border-black w-48 rounded-[0.25rem] h-11 flex items-center !font-semibold justify-center"
+                                                    className=" bg-green-300 text-black border-2 border-black w-48 rounded-[0.25rem] h-11 flex items-center !font-semibold justify-center"
                                                 >
                                                     Durasi Tunggu
-                                                </TableHeading>
+                                                </th>
                                                 <th
                                                     name="problem"
-                                                    // sort_field={
-                                                    //     queryParams.sort_field
-                                                    // }
-                                                    // sort_direction={
-                                                    //     queryParams.sort_direction
-                                                    // }
-                                                    // sortChanged={sortChanged}
-                                                    className=" bg-orangeTheme text-black border-2 border-black w-48 rounded-[0.25rem] h-11 flex items-center !font-semibold justify-center"
+                                                    className=" bg-green-300 text-black border-2 border-black w-48 rounded-[0.25rem] h-11 flex items-center !font-semibold justify-center"
                                                 >
                                                     Durasi Bongkar Muat
                                                 </th>
-                                                <TableHeading
+                                                <th
                                                     name="problem_analysis"
-                                                    // sort_field={
-                                                    //     queryParams.sort_field
-                                                    // }
-                                                    // sort_direction={
-                                                    //     queryParams.sort_direction
-                                                    // }
-                                                    // sortChanged={sortChanged}
-                                                    className=" bg-orangeTheme text-black border-2 border-black w-44 rounded-[0.25rem] h-11 flex items-center !font-semibold justify-center"
+                                                    className=" bg-green-300 text-black border-2 border-black w-44 rounded-[0.25rem] h-11 flex items-center !font-semibold justify-center"
                                                 >
                                                     Tanggal Keluar
-                                                </TableHeading>
+                                                </th>
                                                 <th
                                                     name="reparation"
-                                                    // sort_field={
-                                                    //     queryParams.sort_field
-                                                    // }
-                                                    // sort_direction={
-                                                    //     queryParams.sort_direction
-                                                    // }
-                                                    // sortChanged={sortChanged}
-                                                    className=" bg-orangeTheme text-black border-2 border-black w-28 rounded-[0.25rem] h-11 flex items-center !font-semibold justify-center"
+                                                    className=" bg-green-300 text-black border-2 border-black w-28 rounded-[0.25rem] h-11 flex items-center !font-semibold justify-center"
                                                 >
                                                     Jam Keluar
                                                 </th>
@@ -302,7 +241,7 @@ export default function Scan({ transactions, queryParams = null, success = null 
                                                         <td
                                                             className={`${
                                                                 index % 2 != 0
-                                                                    ? "bg-yellow-50"
+                                                                    ? "bg-green-100"
                                                                     : "bg-white"
                                                             } px-1 h-11 py-2 text-ellipsis overflow-hidden text-nowrap text-center border-black border-[1px] rounded-[0.25rem] w-16`}
                                                         >
@@ -320,7 +259,7 @@ export default function Scan({ transactions, queryParams = null, success = null 
                                                         <td
                                                             className={`${
                                                                 index % 2 != 0
-                                                                    ? "bg-yellow-50"
+                                                                    ? "bg-green-100"
                                                                     : "bg-white"
                                                             } px-1 h-11 py-2 text-ellipsis overflow-hidden text-nowrap text-center border-black border-[1px] rounded-[0.25rem] w-36`}
                                                         >
@@ -337,7 +276,7 @@ export default function Scan({ transactions, queryParams = null, success = null 
                                                                 className={`${
                                                                     index % 2 !=
                                                                     0
-                                                                        ? "bg-yellow-50"
+                                                                        ? "bg-green-100"
                                                                         : "bg-white"
                                                                 } border-black border-[1px] rounded-[0.25rem] text-ellipsis overflow-hidden text-nowrap w-full h-full inline-block px-3 py-2 `}
                                                             >
@@ -351,7 +290,7 @@ export default function Scan({ transactions, queryParams = null, success = null 
                                                         <td
                                                             className={`${
                                                                 index % 2 != 0
-                                                                    ? "bg-yellow-50"
+                                                                    ? "bg-green-100"
                                                                     : "bg-white"
                                                             } px-3 h-11 py-2 text-ellipsis overflow-hidden text-nowrap text-center border-black border-[1px] rounded-[0.25rem] w-44`}
                                                         >
@@ -368,7 +307,7 @@ export default function Scan({ transactions, queryParams = null, success = null 
                                                         <td
                                                             className={` ${
                                                                 index % 2 != 0
-                                                                    ? "bg-yellow-50"
+                                                                    ? "bg-green-100"
                                                                     : "bg-white"
                                                             } px-3 h-11 py-2 text-ellipsis overflow-hidden text-nowrap text-center border-black border-[1px] rounded-[0.25rem] w-28`}
                                                         >
@@ -383,7 +322,7 @@ export default function Scan({ transactions, queryParams = null, success = null 
                                                         <td
                                                             className={`${
                                                                 index % 2 != 0
-                                                                    ? "bg-yellow-50"
+                                                                    ? "bg-green-100"
                                                                     : "bg-white"
                                                             } px-3 h-11 py-2 text-ellipsis overflow-hidden text-nowrap text-center border-black border-[1px] rounded-[0.25rem] w-48`}
                                                         >
@@ -410,7 +349,7 @@ export default function Scan({ transactions, queryParams = null, success = null 
                                                         <td
                                                             className={`${
                                                                 index % 2 != 0
-                                                                    ? "bg-yellow-50"
+                                                                    ? "bg-green-100"
                                                                     : "bg-white"
                                                             } px-3 h-11 py-2 text-ellipsis overflow-hidden text-nowrap text-center border-black border-[1px] rounded-[0.25rem] w-48`}
                                                         >
@@ -422,7 +361,7 @@ export default function Scan({ transactions, queryParams = null, success = null 
                                                         <td
                                                             className={`${
                                                                 index % 2 != 0
-                                                                    ? "bg-yellow-50"
+                                                                    ? "bg-green-100"
                                                                     : "bg-white"
                                                             } px-3 h-11 py-2 text-ellipsis overflow-hidden text-nowrap text-center border-black border-[1px] rounded-[0.25rem] w-44`}
                                                         >
@@ -433,7 +372,7 @@ export default function Scan({ transactions, queryParams = null, success = null 
                                                         <td
                                                             className={`${
                                                                 index % 2 != 0
-                                                                    ? "bg-yellow-50"
+                                                                    ? "bg-green-100"
                                                                     : "bg-white"
                                                             } px-3 h-11 py-2 text-ellipsis overflow-hidden text-nowrap text-center border-black border-[1px] rounded-[0.25rem] w-28`}
                                                         >
@@ -448,7 +387,7 @@ export default function Scan({ transactions, queryParams = null, success = null 
                                         </tbody>
                                     </table>
                                 </div>
-                                <Pagination links={transactions.meta.links} />
+                                {/* <Pagination links={transactions.meta.links} /> */}
                             </div>
                         </div>
                     </div>
