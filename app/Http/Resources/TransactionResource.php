@@ -24,6 +24,8 @@ class TransactionResource extends JsonResource
             'durasi_bongkarMuat' => $this->supplier_selesaiBongkarMuat ? Carbon::parse($this->supplier_startBongkarMuat)->diff($this->supplier_selesaiBongkarMuat)->forHumans() : '-',
             'supplier_selesaiBongkarMuat' => Carbon::parse($this->supplier_selesaiBongkarMuat)->translatedFormat('d F Y'),
             'supplier_out' => $this->supplier_out?: '-',
+            'isArrivalOnTime'=> $this->isArrivalOnTime,
+            'isUnloadingOnTime'=> $this->isUnloadingOnTime,
             // $table->string('supplier_code');
             // $table->foreign('supplier_code')->references('supplier_code')->on('suppliers');
             // $table->timestamp('supplier_in');

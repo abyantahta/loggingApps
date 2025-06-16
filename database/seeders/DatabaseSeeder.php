@@ -315,6 +315,8 @@ class DatabaseSeeder extends Seeder
                     // Calculate end time based on actual duration
                     $endTime = $arrivalTime->copy()->addMinutes($actualDuration);
                     
+                    $isArrivalOnTime = $arrivalTime->copy() <= Carbon::parse($arrivalRule['jam_kedatangan'])->copy()->subDays($i)->addMinutes(15);
+                    $isUnloadingOnTime = abs(Carbon::parse($endTime)->diffInMinutes(Carbon::parse($arrivalTime))) <= (int)($arrivalRule['durasi_bongkar']);
                     Transaction::create([
                         'supplier_code' => $arrivalRule['supplier_code'],
                         'rit' => $arrivalRule['rit'],
@@ -322,6 +324,8 @@ class DatabaseSeeder extends Seeder
                         'supplier_startBongkarMuat' => $arrivalTime,
                         'supplier_selesaiBongkarMuat' => $endTime,
                         'supplier_out' => $endTime->copy()->addMinutes(rand(0,25)),
+                        'isArrivalOnTime' => $isArrivalOnTime,
+                        'isUnloadingOnTime' => $isUnloadingOnTime,
                         'created_at' => now(),
                         'updated_at' => now(),
                     ]);

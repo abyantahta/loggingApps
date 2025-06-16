@@ -20,36 +20,34 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        
         $sortField = request("sort_field", "transactions.created_at");
         $sortDirection = request("sort_direction", "desc");
         $suppliers = Supplier::all();
-        
+
         $query = Transaction::query();
-        if(request("dateStart") && request("dateEnd")){
+        if (request("dateStart") && request("dateEnd")) {
             $start = Carbon::parse(request("dateStart"));
             $end = Carbon::parse(request("dateEnd"));
-            if(request("dateStart") == request("dateEnd")){
-                $query->whereDate("transactions.supplier_in",$start)->get();
-            }else{
-                $query->whereBetween('transactions.supplier_in', [$start,$end])->get();
+            if (request("dateStart") == request("dateEnd")) {
+                $query->whereDate("transactions.supplier_in", $start)->get();
+            } else {
+                $query->whereBetween('transactions.supplier_in', [$start, $end])->get();
             }
-        }else if(request("dateStart")){
+        } else if (request("dateStart")) {
             $start = Carbon::parse(request("dateStart"));
-            $query->whereDate("transactions.supplier_in",$start)->get();
+            $query->whereDate("transactions.supplier_in", $start)->get();
         }
 
-        if(request("supplier_code")){
-            $query->where("transactions.supplier_code",request("supplier_code"))->get();
+        if (request("supplier_code")) {
+            $query->where("transactions.supplier_code", request("supplier_code"))->get();
         }
         //
         $transactions = $query->orderBy($sortField, $sortDirection)->paginate(10)->withQueryString();
-        return inertia('Transactions',[
+        return inertia('Transactions', [
             'transactions' => TransactionResource::collection($transactions),
             'queryParams' => request()->query() ?: null,
             'suppliers' => $suppliers
         ]);
-        //
     }
     /**
      * Show the form for creating a new resource.
@@ -65,26 +63,40 @@ class TransactionController extends Controller
     {
         $data = $request->validated();
         // dd($data);
-        $rules = ArrivalRule::query()->where('supplier_code',$data["supplier_code"])->get();
-        // dd($rules);
+        $rules = ArrivalRule::query()->where('supplier_code', $data["supplier_code"])->get();
+
+        $transactionIsExist_rit1 = Transaction::where('supplier_code', $data["supplier_code"])->where('rit', 1)->whereDate('supplier_in', Carbon::today())->exists();
+        $transactionIsExist_rit2 = Transaction::where('supplier_code', $data["supplier_code"])->where('rit', 2)->whereDate('supplier_in', Carbon::today())->exists();
+        // dd($transactionIsExist_rit1,$transactionIsExist_rit2);
         $rit = 1;
-        if(count($rules)==2){
+        
+        // dd($transactionIsExist_rit1,count($rules) == 2);
+
+        if (count($rules) == 2) {
             //SUBHOURS AGAR ADA TOLERANSI JIKA DATANG KECEPETAN 2 JAM
             $ruleRit1 = Carbon::parse($rules[0]->jam_kedatangan)->subHours(2)->format('H:i');
-            $ruleRit2 = Carbon::parse($rules[1]->jam_kedatangan)->subHours(2)->format('H:i');
+            $ruleRit2 = Carbon::parse($rules[1]->jam_kedatangan)->format('H:i');
             //DIBUAT SEPERTI INI AGAR DIA BENTUKNYA OBJECT
             $timeActual = Carbon::createFromFormat('H:i', Carbon::parse($data["supplier_in"])->format('H:i')); // 6 AM
-
-            if ($timeActual->between($ruleRit1, $ruleRit2, true)) {
+            // dd($transactionIsExist_rit1,$transactionIsExist_rit2);
+            if ($timeActual->between($ruleRit1, $ruleRit2, true) && !$transactionIsExist_rit1) {
                 $rit = 1;
-            } else{
+            } else if ($timeActual->between($ruleRit2, $ruleRit1, true) && !$transactionIsExist_rit2) {
                 $rit = 2;
+            } else {
+                return redirect()->route('scan')->with('error', "Transaksi terindikasi duplikat karena semua transaksi hari ini sudah dilakukan");
             }
+        } else if ($transactionIsExist_rit1) {
+            return redirect()->route('scan')->with('error', "Transaksi terindikasi duplikat karena semua transaksi hari ini sudah dilakukan");
         }
+        $isArrivalOnTime = ($rit == 1) ? (Carbon::parse($data["supplier_in"])<Carbon::parse($rules[0]->jam_kedatangan)) : (Carbon::parse($data["supplier_in"])<Carbon::parse($rules[1]->jam_kedatangan));
+
+
         Transaction::create([
             'supplier_in' => $data["supplier_in"],
             'supplier_code' => $data["supplier_code"],
-            'rit'=>$rit
+            'rit' => $rit,
+            'isArrivalOnTime' => $isArrivalOnTime
         ]);
         return redirect()->route('scan')->with('success', 'Data berhasil disimpan');
     }
@@ -115,21 +127,28 @@ class TransactionController extends Controller
     {
         $data = $request->validated();
         $keys = array_keys($data);
-        // dd($keys);
+        $isUnloadingOnTime = false;
+        // dd($data);
         // $transaction = Transaction::where('supplier_code', $data['supplier_code']);
-        if($keys[1]==="supplier_startBongkarMuat"){
-            $transaction = Transaction::where('supplier_code', $data['supplier_code'])->whereNull($keys[1])->first();            
-        }else if($keys[1]==="supplier_selesaiBongkarMuat"){
-            $transaction = Transaction::where('supplier_code', $data['supplier_code'])->whereNull($keys[1])->whereNotNull('supplier_startBongkarMuat')->first();            
-        }else if($keys[1]==="supplier_out"){
-            $transaction = Transaction::where('supplier_code', $data['supplier_code'])->whereNull($keys[1])->whereNotNull('supplier_startBongkarMuat')->whereNotNull('supplier_selesaiBongkarMuat')->first();            
+        if ($keys[1] === "supplier_startBongkarMuat") {
+            $transaction = Transaction::where('supplier_code', $data['supplier_code'])->whereNull($keys[1])->first();
+        } else if ($keys[1] === "supplier_selesaiBongkarMuat") {
+            $transaction = Transaction::where('supplier_code', $data['supplier_code'])->whereNull($keys[1])->whereNotNull('supplier_startBongkarMuat')->first();
+            
+            $durasiBongkar = abs(Carbon::parse($data['supplier_selesaiBongkarMuat'])->diffInMinutes($transaction->supplier_startBongkarMuat));
+            $rules = ArrivalRule::query()->where('supplier_code', $data["supplier_code"])->where('rit',$transaction->rit)->first();
+            $isUnloadingOnTime = ($durasiBongkar < $rules->durasi_bongkar);
+            $data = array_merge($data,["isUnloadingOnTime"=>$isUnloadingOnTime]);
+            // dd($isUnloadingOnTime,$data);
+        } else if ($keys[1] === "supplier_out") {
+            $transaction = Transaction::where('supplier_code', $data['supplier_code'])->whereNull($keys[1])->whereNotNull('supplier_startBongkarMuat')->whereNotNull('supplier_selesaiBongkarMuat')->first();
         }
         // dd($transaction);
-        if($transaction){
+        if ($transaction) {
             $transaction->update($data);
             return redirect()->route('scan')->with('success', 'Data berhasil disimpan');
-        }else{
-            return redirect()->route('scan')->with('error', 'Data gagal disimpan, Supplier Code '.$data['supplier_code'].' tidak ditemukan atau tidak mengikuti flow yang benar');
+        } else {
+            return redirect()->route('scan')->with('error', 'Data gagal disimpan, Supplier Code ' . $data['supplier_code'] . ' tidak ditemukan atau tidak mengikuti flow yang benar');
         }
     }
     public function export()

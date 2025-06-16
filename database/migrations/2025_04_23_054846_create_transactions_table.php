@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('supplier_code');
             $table->foreign('supplier_code')->references('supplier_code')->on('suppliers');
             $table->timestamp('supplier_in');
+            $table->boolean('isArrivalOnTime')->nullable();
+            $table->boolean('isUnloadingOnTime')->nullable();
             $table->timestamp('supplier_startBongkarMuat')->nullable();
             $table->timestamp('supplier_selesaiBongkarMuat')->nullable();
             $table->timestamp('supplier_out')->nullable();

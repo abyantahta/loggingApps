@@ -210,7 +210,7 @@ const Transactions = ({
                                                         <td
                                                             className={`${
                                                                 index % 2 != 0
-                                                                    ? "bg-green-100"
+                                                                    ? "bg-white"
                                                                     : "bg-white"
                                                             } px-1 h-11 py-2 text-ellipsis overflow-hidden text-nowrap text-center border-black border-[1px] rounded-[0.25rem] w-16`}
                                                         >
@@ -225,7 +225,7 @@ const Transactions = ({
                                                         <td
                                                             className={`${
                                                                 index % 2 != 0
-                                                                    ? "bg-green-100"
+                                                                    ? "bg-white"
                                                                     : "bg-white"
                                                             } px-1 h-11 py-2 text-ellipsis overflow-hidden text-nowrap text-center border-black border-[1px] rounded-[0.25rem] w-36`}
                                                         >
@@ -242,7 +242,7 @@ const Transactions = ({
                                                                 className={`${
                                                                     index % 2 !=
                                                                     0
-                                                                        ? "bg-green-100"
+                                                                        ? "bg-white"
                                                                         : "bg-white"
                                                                 } border-black border-[1px] rounded-[0.25rem] text-ellipsis overflow-hidden text-nowrap w-full h-full inline-block px-3 py-2 `}
                                                             >
@@ -256,7 +256,7 @@ const Transactions = ({
                                                         <td
                                                             className={`${
                                                                 index % 2 != 0
-                                                                    ? "bg-green-100"
+                                                                    ? "bg-white"
                                                                     : "bg-white"
                                                             } px-3 h-11 py-2 text-ellipsis overflow-hidden text-nowrap text-center border-black border-[1px] rounded-[0.25rem] w-44`}
                                                         >
@@ -272,15 +272,11 @@ const Transactions = ({
                                                         </td>
                                                         <td
                                                             className={` ${
-                                                                index % 2 != 0
+                                                                transaction.isArrivalOnTime
                                                                     ? "bg-green-100"
-                                                                    : "bg-white"
+                                                                    : "bg-red-100"
                                                             } px-3 h-11 py-2 text-ellipsis overflow-hidden text-nowrap text-center border-black border-[1px] rounded-[0.25rem] w-28`}
                                                         >
-                                                            {/* {" "}
-                                                    {
-                                                        transaction.machine_name
-                                                    }{" "} */}
                                                             {moment(
                                                                 transaction.supplier_in
                                                             ).format("HH:mm")}
@@ -288,7 +284,7 @@ const Transactions = ({
                                                         <td
                                                             className={`${
                                                                 index % 2 != 0
-                                                                    ? "bg-green-100"
+                                                                    ? "bg-white"
                                                                     : "bg-white"
                                                             } px-3 h-11 py-2 text-ellipsis overflow-hidden text-nowrap text-center border-black border-[1px] rounded-[0.25rem] w-48`}
                                                         >
@@ -316,14 +312,11 @@ const Transactions = ({
                                                         </td>
                                                         <td
                                                             className={`${
-                                                                index % 2 != 0
+                                                                transaction.isUnloadingOnTime
                                                                     ? "bg-green-100"
-                                                                    : "bg-white"
+                                                                    : "bg-red-100"
                                                             } px-3 h-11 py-2 text-ellipsis overflow-hidden text-nowrap text-center border-black border-[1px] rounded-[0.25rem] w-48`}
                                                         >
-                                                            {/* {transaction.stopline_duration +
-                                                            " menit"} */}
-                                                            {/* menit */}
                                                             {
                                                                 transaction.durasi_bongkarMuat
                                                             }
@@ -331,7 +324,7 @@ const Transactions = ({
                                                         <td
                                                             className={`${
                                                                 index % 2 != 0
-                                                                    ? "bg-green-100"
+                                                                    ? "bg-white"
                                                                     : "bg-white"
                                                             } px-3 h-11 py-2 text-ellipsis overflow-hidden text-nowrap text-center border-black border-[1px] rounded-[0.25rem] w-44`}
                                                         >
@@ -347,7 +340,7 @@ const Transactions = ({
                                                         <td
                                                             className={`${
                                                                 index % 2 != 0
-                                                                    ? "bg-green-100"
+                                                                    ? "bg-white"
                                                                     : "bg-white"
                                                             } px-3 h-11 py-2 text-ellipsis overflow-hidden text-nowrap text-center border-black border-[1px] rounded-[0.25rem] w-28`}
                                                         >
